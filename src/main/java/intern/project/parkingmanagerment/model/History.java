@@ -40,9 +40,9 @@ public class History implements Serializable {
     @Column(name = "time_out")
     private Date timeOut;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_check")
-    private User userCheck;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_check")
+//    private User userCheck;
 
     @CreationTimestamp
     @Column(name = "created_at")
