@@ -32,6 +32,9 @@ public class VehicleType implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "price_per_day")
+    private Double pricePerDay;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
