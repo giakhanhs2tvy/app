@@ -14,6 +14,6 @@ public class HomeController {
  
 		model.addAttribute("text", "Spring2222  2222 Boot huhuhuh DevTools example");
  
-		return "home";
+		return "vehicletype";
 	}
 }

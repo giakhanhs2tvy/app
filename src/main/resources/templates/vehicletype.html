@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+
+        $.ajax({
+            type: "GET",
+            url: "/api/vehicleType",
+            data: {
+
+            },
+            success: function (data) {
+                // let response = JSON.parse(data);
+                var s = '<option value="-1">Please Select a Recipient</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].vehicleTypeID + '">' + data[i].name + '</option>';
+                }
+                $("#vehicleType").html(s);
+            }
+        });
+        $(document).ready(function(){
+            $("#btn_checkCardId").click(function(){
+                var x = document.getElementById("cardId");
+                /*x.value = x.value.toUpperCase();*/
+                $.ajax({
+                    type: "GET",
+                    url: "/api/history",
+                    data: {
+                        cardId: x.value
+                    },
+                    success: function (data) {
+                        // $("#bienso").value = (data);
+                        let x = document.getElementById("bienso");
+                        x.value = data.cardId;
+                    }
+                });
+            });
+        });
+
+    </script>
+</head>
+<body>
+
+<span id="button2">hello</span>
+<form>
+    <div>
+        <label>ID thẻ</label>
+        <input type="text"  id="cardId" placeholder="ID thẻ">
+        <span id="btn_checkCardId">check</span>
+    </div>
+    <div>
+        <label>Biển số xe</label>
+        <input type="text" id="bienso" placeholder="Biển số xe">
+    </div>
+    <div>
+        <label>Loại xe</label>
+        <select name="Loại xe" id="vehicleType">
+        </select>
+    </div>
+    <div>
+        <label>Thời gian vào</label>
+        <input type="text" placeholder="Thời gian vào">
+    </div>
+    <div>
+        <label>Thời gian ra</label>
+        <input type="text" placeholder="Thời gian ra">
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </div>
+</form>
+
+
+</body>
+</html>
