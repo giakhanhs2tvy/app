@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
  
-	@GetMapping("/")
+	@GetMapping("/home")
 	public String home(Model model) {
  
 		model.addAttribute("text", "Spring2222  2222 Boot huhuhuh DevTools example");

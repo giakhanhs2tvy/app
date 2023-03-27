@@ -32,7 +32,7 @@ public class User implements Serializable {
     private Long userId;
 
     @Column(name = "username")
-    private String username;
+    private String userName;
 
     @Column(name = "password")
     private String password;
@@ -77,6 +77,8 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-    
+    public void addRole(Role role){
+        this.roles.add(role);
+    }
     // Constructors, getters, and setters
 }
