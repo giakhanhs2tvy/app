@@ -2,15 +2,85 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>LoginForm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/LoginPage.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="robots" content="noindex, follow">
 </head>
 <body>
-<form th:action="@{/login}" method="post">
-    <label>User</label>
-    <input name="username"> <br>
-    <label>Password</label>
-    <input name="password"> <br>
-    <button type="submit">Login</button>
-</form>
+    <div class="wrapper"
+         style="background-image: url('https://vietnamdiscovery.com/wp-content/uploads/2019/10/Is-Danang-worth-visiting.jpg');">
+        <div class="inner">
+            <div class="image-holder">
+                <img
+                        src="https://images.pexels.com/photos/2524416/pexels-photo-2524416.jpeg?cs=srgb&dl=pexels-charles-pragnell-2524416.jpg&fm=jpg&_gl=1*lk7y2e*_ga*NDAyNTczNzYxLjE2NzkzODU0MjU.*_ga_8JE65Q40S6*MTY3OTQ1OTAzNS4yLjEuMTY3OTQ1OTQ0MS4wLjAuMA.."
+                        alt="">
+            </div>
+            <form th:action="@{/login}" name="formLogin" method="post" onsubmit="return validateForm()">
+                <h3>Login Form</h3>
+                <div th:if="${message}" class="alert alert-success text-center" th:text="${message}">
+                </div>
+                <div class="form-wrapper">
+                    <div id="validateUsername" class="alert-warning"></div>
+                    <input type="text" placeholder="Username" name="username" class="form-control">
+                    <i class="zmdi zmdi-account"></i>
+                </div>
+                <div class="form-wrapper">
+                    <div id="validatePassword" class="alert-warning"></div>
+                    <input type="password" placeholder="Password" name="password" class="form-control">
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+                <button>LOGIN
+                    <i class="zmdi zmdi-arrow-right"></i>
+                </button>
+                <p class="signuphere">Don't have an account? <a th:href="@{/register}">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+    </script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993"
+            integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA=="
+            data-cf-beacon='{"rayId":"7ab499435ae20f04","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2023.2.0","si":100}'
+            crossorigin="anonymous"></script>
+    <script>
+        function validateForm(){
+            var username = document.formLogin.username.value;
+            var password = document.formLogin.password.value;
+            var elementUsername = document.getElementById("validateUsername");
+            var elementPassword = document.getElementById("validatePassword");
+            var status=false;
+
+            if (username==null || username==""){
+                elementUsername.innerHTML = "Please input username!";
+                status=false;
+            }
+            else{
+                elementUsername.innerHTML = "";
+                status=true;
+            }
+            if (password==null || password==""){
+                elementPassword.innerHTML = "Please input password!";
+                status = false;
+            }
+            else{
+                elementPassword.innerHTML = "";
+            }
+            return status;
+        }
+    </script>
 </body>
 </html>
