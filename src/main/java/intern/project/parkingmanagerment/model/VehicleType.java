@@ -24,7 +24,7 @@ public class VehicleType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vehicle_type_id")
-    private Long vehicleTypeID;
+    private Long vehicleTypeId;
     
     @Column(name = "name")
     private String name;

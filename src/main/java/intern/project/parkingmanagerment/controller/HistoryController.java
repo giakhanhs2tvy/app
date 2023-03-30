@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/history")
 public class HistoryController {
@@ -52,22 +54,10 @@ public class HistoryController {
     @RequestMapping("/list")
     public String getAllHistory(Model model) {
 
-        // check: history has timeOut null and cardId = cardId
+        List<HistoryDto> historyDtoList = historyService.loadMoreHistoryDto(0L);
+        model.addAttribute("historyList", historyDtoList);
 
-        // if null create new history base cardId, vehiclePlace
-
-        // if not null fill timeOut and check vehicle has contract
-
-        // if it has the contract check time expired
-
-        // not expired -> do nothing
-
-        // expired -> delete all contract in vehicle has this contract and create new invoice
-
-        // if it hasn't the contract create new invoice base type vehicle and time(day)
-        model.addAttribute("type", "adadad");
-
-        return "redirect:list";
+        return "list-history";
     }
 
 

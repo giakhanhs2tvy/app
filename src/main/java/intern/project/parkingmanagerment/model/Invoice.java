@@ -25,12 +25,12 @@ public class Invoice implements Serializable {
     @Column(name = "invoice_id")
     private Long invoiceID;
     
-    @ManyToOne
-    @JoinColumn(name = "history_id")
-    private History history;
+//    @ManyToOne
+//    @JoinColumn(name = "history_id")
+//    private History history;
     
     @Column(name = "num_day")
-    private Integer numDay;
+    private Long numDay;
     
 //    @ManyToOne
     @Column(name = "price")
