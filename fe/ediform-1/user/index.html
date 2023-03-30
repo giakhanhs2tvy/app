@@ -45,7 +45,7 @@
                         <!-- Start Navbar -->
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="../index.html">
-                                <img src="../assets//images/logo/white-logo.svg" alt="Logo">
+                                <img src="../assets/images/logo/white-logo.svg" alt="Logo">
                             </a>
                             <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -57,7 +57,7 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="../index.html" class="page-scroll active" aria-label="Toggle navigation">Trang
+                                        <a href="../index.html" class="page-scroll active" >Trang
                                             chủ</a>
                                     </li>
                                     <li class="nav-item">
@@ -68,7 +68,7 @@
                                             Tháng</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:void(0)" aria-label="Toggle navigation">Vé Lượt</a>
+                                        <a href="javascript:void(0)" aria-label="Toggle navigation">Khách Hàng</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#pricing" class="page-scroll" aria-label="Toggle navigation">Thống
@@ -82,7 +82,7 @@
                                             data-bs-target="#submenu-1-4" aria-controls="navbarSupportedContent"
                                             aria-expanded="false" aria-label="Toggle navigation">Cài Đặt</a>
                                         <ul class="sub-menu collapse" id="submenu-1-4">
-                                            <li class="nav-item"><a href="../user/index.html">Edit Profile</a>
+                                            <li class="nav-item"><a href="javascript:void(0)">Edit Profile</a>
                                             </li>
                                             <li class="nav-item"><a href="javascript:void(0)">Option 2</a></li>
                                             <li class="nav-item"><a href="javascript:void(0)">Option 3</a></li>
@@ -107,60 +107,22 @@
 
        
    
-    <section id="features" class="features section">
-        <div class="container">
+    
 
-            <h3 class="dsxetitle">Lịch sử ra vào</h3>
-            <div class="add-and-search-car">
-                <div class="button-add">
-                    <a href="#" class="btn" id="btn">Record mới</a>
-                </div>
-                <div class="search-car">
-                    <input type="text" class="searchTerm" placeholder="What are you looking for?">
-                    <button class="search-car-Button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div>
             
             <!-- <div id="includeHtml"></div> -->
             <div class="iframe">
-                <iframe src="./tb-history/index.html"></iframe>
+                <iframe src="./editprofile.html"></iframe>
             </div>
-        </div>
 
-
-    </section>
     
-
-    <div class="popup">
-        <div class="closebtn">
-            <!-- <i class="fa fa-window-close" aria-hidden="true"></i> -->
-        </div>
-        <div class="iframe">
-            
-                <iframe class="editformframe" src="../history/historyform.html"></iframe>
-        </div>
-        
-     
-        <h3 class="closebtn" id="closebtn">x</h3>
-       
-
-    </div>
-    <!-- End Features Area -->
   
-
 
     <script>
         //btn add
         document.getElementById("btn").addEventListener("click", function() {
             console.log("ok");
             document.querySelector(".popup").style.display = "flex";
-        })
-
-        document.getElementById("closebtn").addEventListener("click", function() {
-            console.log("ok");
-            document.querySelector(".popup").style.display = "none";
         })
     </script>
 
