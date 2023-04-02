@@ -46,4 +46,9 @@ public class AuthController {
     public String getUserInfo(Principal principal){
         return "userInfo";
     }
+
+    @GetMapping("/car")
+    public String getCar(){
+        return "car";
+    }
 }
