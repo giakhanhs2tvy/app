@@ -84,6 +84,7 @@ public class HistoryApiController {
     public ResponseEntity<?> getVehicle(@RequestBody HistoryDto historyDto) {
         try {
             logger.info("historyDto " + historyDto);
+            logger.info("timeOut " + historyDto.getTimeOut());
             historyDto = historyService.newHistoryByHistoryDto2(historyDto);
             return ResponseEntity.ok().body(historyDto);
         } catch (Exception e) {

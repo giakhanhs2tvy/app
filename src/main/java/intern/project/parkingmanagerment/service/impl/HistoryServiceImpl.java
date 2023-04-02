@@ -106,7 +106,6 @@ public class HistoryServiceImpl implements HistoryService {
                 vehicle.setVehicleType(vehicleType);
                 vehicle = vehicleService.saveVehicle(vehicle);
             }
-            historyCheck.setTimeOut(historyDto.getTimeOut());
             historyCheck.setCard(cardService.findById(historyDto.getCardId()));
             historyCheck.setVehicle(vehicle);
             historyCheck.setTimeIn(historyDto.getTimeIn());

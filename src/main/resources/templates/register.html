@@ -11,7 +11,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
 
-    <link rel="stylesheet" href="css/LoginPage.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/login-register/css/LoginPage.css}">
     <meta name="robots" content="noindex, follow">
 </head>
 <body>
@@ -26,7 +26,6 @@
             <form th:action="@{/register}" th:object="${user}" method="post" name="formRegister" onsubmit="return validateFormRegister()">
                 <h3>Registration Form</h3>
                 <div id="validateFName" class="alert-warning"></div>
-                <div id="validateLName" class="alert-warning"></div>
                 <div class="form-group">
                     <input type="text" placeholder="First Name" class="form-control" name="firstname" th:field="*{firstName}">
                     <input type="text" placeholder="Last Name" class="form-control" name="lastname" th:field="*{lastName}">

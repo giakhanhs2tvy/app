@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Add History</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/history/historyform.css}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/api/vehicleType",
+            data: {
+
+            },
+            success: function (data) {
+                // let response = JSON.parse(data);
+                var s = '<option value="-1">Please Select a Recipient</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].vehicleTypeId + '">' + data[i].name + '</option>';
+                }
+                $("#vehicleType").html(s);
+            }
+        });
+        $(document).ready(function(){
+            $("#btn_checkCardId").click(function(){
+                var x = document.getElementById("cardId");
+                var elementCard = document.getElementById("validateCardId");
+                var elementLicensePlate = document.getElementById("validateLicensePlate");
+                var elementTypeVehicle = document.getElementById("validateVehivleType");
+
+                /*x.value = x.value.toUpperCase();*/
+                console.log("vehicleType.value: " + vehicleType.value + " hic " + vehicleType)
+                $.ajax({
+                    type: "GET",
+                    url: "/api/history",
+                    data: {
+                        cardId: x.value
+                    },
+                    success: function (data) {
+                        // $("#bienso").value = (data);
+
+                        if(data) {
+                            if(data.licensePlate) {
+                                console.log(data)
+                                let timeOut = document.getElementById("timeOut");
+                                let vehicleType = document.getElementById("vehicleType");
+                                let licensePlate = document.getElementById("licensePlate");
+
+                                var d1 = new Date(data.timeOut);
+                                d1.setHours(d1.getHours()+7);
+                                const date1 = d1.toISOString().split('T')[0];
+                                const time1 = d1.toTimeString().split(' ')[0];
+                                let parseTO = date1+" "+time1;
+
+                                vehicleType.value = data.vehicleTypeId;
+                                timeOut.value = parseTO;
+                                licensePlate.value = data.licensePlate;
+                            }
+                            if(data.timeIn) {
+                                let timeIn = document.getElementById("timeIn");
+                                var d2 = new Date(data.timeIn);
+                                d2.setHours(d2.getHours()+7);
+                                const date2 = d2.toISOString().split('T')[0];
+                                const time2 = d2.toTimeString().split(' ')[0];
+                                let parseTI = date2+" "+time2;
+                                timeIn.value = parseTI;
+                            }
+                            elementCard.innerHTML = "";
+                            elementLicensePlate.innerHTML = "";
+                            elementTypeVehicle.innerHTML = "";
+                        } else {
+                            elementCard.innerHTML = "Invalid Card!";
+                            let timeIn = document.getElementById("timeIn");
+                            timeIn.value = "";
+                        }
+                    }
+                });
+            });
+
+            $("#btn_checkLicensePlate").click(function(){
+                var licensePlate = document.getElementById("licensePlate");
+                var vehicleType = document.getElementById("vehicleType");
+                var elementLicensePlate = document.getElementById("validateLicensePlate");
+
+                console.log("vehicleType.value: " + vehicleType.value + " hic " + vehicleType)
+                $.ajax({
+                    type: "GET",
+                    url: "/api/check-vehicle",
+                    data: {
+                        licensePlate: licensePlate.value
+                    },
+                    success: function (data) {
+                        if(data) {
+                            console.log("data: " + data + "\ndata.vehicleType.vehicleTypeId: " + data.vehicleType.vehicleTypeId)
+                            let x = document.getElementById("vehicleType");
+                            x.value = data.vehicleType.vehicleTypeId;
+                            console.log(data)
+                            /*var select = document.getElementById("mySelect");
+                            select.value = optionValue;*/
+                            elementLicensePlate.innerHTML = "";
+                        } else {
+                            elementLicensePlate.innerHTML = "Please select type vehicle!";
+                        }
+
+                    }
+                });
+            });
+
+            $("#btn_submit").click(function(){
+                var licensePlate = document.getElementById("licensePlate");
+                var cardId = document.getElementById("cardId");
+                var timeIn = document.getElementById("timeIn");
+                var vehicleType = document.getElementById("vehicleType");
+                var timeOut = document.getElementById("timeOut");
+                var elementTypeVehicle = document.getElementById("validateVehivleType");
+                var elementLicensePlate = document.getElementById("validateLicensePlate");
+
+                var d1 = new Date(timeIn.value);
+                d1.setHours(d1.getHours()-7);
+                const date1 = d1.toISOString().split('T')[0];
+                const time1 = d1.toTimeString().split(' ')[0];
+                let parseTI = date1+" "+time1;
+
+                var TO = timeOut.value
+                let parseTO = "";
+                if(TO){
+                    var d2 = new Date(TO);
+                    d2.setHours(d2.getHours()-7);
+                    const date2 = d2.toISOString().split('T')[0];
+                    const time2 = d2.toTimeString().split(' ')[0];
+                    parseTO = date2+" "+time2;
+                }
+
+                console.log("vehicleType.value: " + vehicleType.value + " hic " + vehicleType)
+                if (vehicleType.value > 0) {
+                    var historyDto = {
+                        cardId: cardId.value,
+                        licensePlate: licensePlate.value,
+                        vehicleTypeId: vehicleType.value,
+                        timeIn: parseTI,
+                        timeOut:parseTO
+                    };
+                    $.ajax({
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/api/new-history",
+                        data: JSON.stringify(historyDto),
+                        success: function (data) {
+                            if (data) {
+                                console.log(data);
+
+
+                                if(data.price){
+                                    alert("Pay: " + data.price);
+                                    licensePlate.value = "";
+                                    cardId.value = "";
+                                    vehicleType.value = "-1";
+                                    timeIn.value = "";
+                                    timeOut.value = "";
+                                }
+                                else{
+                                    alert("Scan TimeIn is successed!");
+                                    licensePlate.value = "";
+                                    cardId.value = "";
+                                    vehicleType.value = "-1";
+                                    timeIn.value = "";
+                                    timeOut.value = "";
+                                }
+
+                            } else {
+                                elementLicensePlate.innerHTML = "Please select type vehicle!";
+                            }
+                        }
+                    });
+                } else {
+                    elementTypeVehicle.innerHTML = "No vehicle type selected";
+                    if (licensePlate.value == "" || licensePlate.value == null){
+                        elementLicensePlate.innerHTML = "Please input License Plate";
+                    }
+                }
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+<div class="signup-container">
+    <div class="left-container">
+        <h1>
+            <i class="fas fa-paw"></i>
+            Biển số xe
+        </h1>
+        <div class="puppy">
+            <img src="https://images.pexels.com/photos/2524416/pexels-photo-2524416.jpeg?cs=srgb&dl=pexels-charles-pragnell-2524416.jpg&fm=jpg&_gl=1*lk7y2e*_ga*NDAyNTczNzYxLjE2NzkzODU0MjU.*_ga_8JE65Q40S6*MTY3OTQ1OTAzNS4yLjEuMTY3OTQ1OTQ0MS4wLjAuMA.." alt="">
+
+        </div>
+    </div>
+    <div class="right-container">
+
+        <header>
+
+
+            <h1>Lịch sử</h1>
+            <div class="set">
+
+                <div class="cardId">
+                    <label >Card ID</label>
+                    <div id="validateCardId" class="alert-warning"></div>
+                    <input id="cardId" placeholder="Input CardId " type="text">
+                </div>
+                <div class="pets-photo">
+                    <i class="fas fa-camera-retro"></i>
+                    <div class="check-btn">
+                        <span id="btn_checkCardId" >Check</span>
+                    </div>
+                </div>
+            </div>
+            <div class="set">
+                <div class="cardId">
+                    <label >LicensePlate</label>
+                    <div id="validateLicensePlate" class="alert-warning"></div>
+                    <input id="licensePlate" placeholder="Input LicensePlate" type="text"></input>
+                </div>
+                <div class="pets-photo">
+                    <i class="fas fa-camera-retro"></i>
+                    <div class="check-btn">
+                        <span id="btn_checkLicensePlate">Check</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pets-weight">
+                <label>Loại xe</label>
+                <div id="validateVehivleType" class="alert-warning"></div>
+                <div class="radio-container">
+                    <select name="Loại xe" id="vehicleType"></select>
+                </div>
+            </div>
+
+            <div class="set">
+                <div class="pets-birthday">
+                    <label >Thời gian vào</label>
+                    <input id="timeIn" placeholder="MM/DD/YYYY" type="text" disabled></input>
+                </div>
+                <div class="pets-birthday">
+                    <label >Thời gian ra</label>
+                    <input id="timeOut" placeholder="MM/DD/YYYY" type="text" disabled></input>
+                </div>
+            </div>
+        </header>
+        <footer>
+            <div class="set">
+                <button id="back">Close</button>
+                <button id="btn_submit">Submit</button>
+            </div>
+        </footer>
+    </div>
+</div>
+
+
+</body>
+</html>

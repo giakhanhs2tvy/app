@@ -57,7 +57,7 @@ public class HistoryController {
         List<HistoryDto> historyDtoList = historyService.loadMoreHistoryDto(0L);
         model.addAttribute("historyList", historyDtoList);
 
-        return "list-history";
+        return "history";
     }
 
 

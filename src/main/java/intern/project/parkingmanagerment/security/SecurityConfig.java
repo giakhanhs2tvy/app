@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll().and()
                 .formLogin().loginPage("/login").loginProcessingUrl("/login")
                 .usernameParameter("username").passwordParameter("password")
-                .defaultSuccessUrl("/userInfo").and().csrf().disable();
+                .defaultSuccessUrl("/car").and().csrf().disable();
 
     }
 
