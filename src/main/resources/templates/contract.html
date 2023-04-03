@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/addContract}" th:object="${contract}" method="post">
+    <fieldset>   <label>Customer</label>
+    <input th:field="*{customer.name}">
+    <label>Contract type</label>
+
+    <select th:field="*{contractType.contractTypeID}">
+        <option th:each="ct :${contractType}" th:value="${ct.contractTypeID}" th:text="${ct.pricePerSize}"></option>
+    </select> <br>
+        <!--<label>Number of vehicle:</label>
+        <input type="text" name="numve">-->
+        <table>
+            <thead>
+            <tr>
+                <th> Vehicle License Plate:</th>
+                <th> Vehicle Type:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vehicle,iter :*{vehicles}">
+                <td><input th:field="*{vehicles[__${iter.index}__].licensePlate}" /></td>
+                <td>
+                    <select th:field="*{vehicles[__${iter.index}__].vehicleType}">
+                        <option th:each="vt :${vehicleType}" th:value="${vt.vehicleTypeID}" th:text="${vt.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+     <!--<th:block th:each="vehicle,iter :*{vehicleList}">
+         Vehicle License Plate:
+    <input type="text" th:field="*{vehicleList[__${iter.index}__].licensePlate}">
+    </th:block>-->
+
+        <input type="submit" id="submitButton" th:value="Save">
+        <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+    </fieldset>
+</form>
+</body>
+</html>

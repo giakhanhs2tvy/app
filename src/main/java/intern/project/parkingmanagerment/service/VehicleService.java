@@ -13,4 +13,5 @@ public interface VehicleService {
     VehicleDto findVehicleDtoByLicensePlate(String licensePlate);
 
     Vehicle saveVehicle(Vehicle vehicle);
+    Vehicle createVehicle(Vehicle vehicle);
 }
