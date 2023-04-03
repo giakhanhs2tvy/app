@@ -31,7 +31,7 @@ public class Vehicle implements Serializable {
     private Contract contract;
     
     @ManyToOne
-    @JoinColumn(name = "vehicle_type_id")
+    @JoinColumn(name = "vehicle_type_id",nullable = false)
     private VehicleType vehicleType;
 
     @CreationTimestamp

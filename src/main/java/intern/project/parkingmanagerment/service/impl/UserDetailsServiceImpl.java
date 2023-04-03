@@ -1,4 +1,4 @@
-package intern.project.parkingmanagerment.service;
+package intern.project.parkingmanagerment.service.impl;
 
 import intern.project.parkingmanagerment.model.User;
 import intern.project.parkingmanagerment.repositories.UserRepository;
@@ -16,6 +16,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUserName(username);
-        return new CustomUserDetails(user);
+        if(user!=null){
+            return new CustomUserDetails(user);
+        }
+        else throw new UsernameNotFoundException("User not found");
     }
 }

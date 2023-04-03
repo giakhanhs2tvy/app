@@ -4,6 +4,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,8 @@ public class Contract implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
+    @OneToMany(mappedBy = "contract",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    List<Vehicle> Vehicles;
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;

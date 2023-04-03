@@ -1,9 +1,13 @@
 package intern.project.parkingmanagerment.service.impl;
 
 import intern.project.parkingmanagerment.dto.VehicleDto;
+import intern.project.parkingmanagerment.exceptions.ExistException;
+import intern.project.parkingmanagerment.exceptions.NotFoundException;
 import intern.project.parkingmanagerment.model.Contract;
 import intern.project.parkingmanagerment.model.Vehicle;
+import intern.project.parkingmanagerment.repositories.ContractRepository;
 import intern.project.parkingmanagerment.repositories.VehicleRepository;
+import intern.project.parkingmanagerment.repositories.VehicleTypeRepository;
 import intern.project.parkingmanagerment.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +19,10 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Autowired
     VehicleRepository vehicleRepository;
-
+    @Autowired
+    VehicleTypeRepository vehicleTypeRepo;
+    @Autowired
+    ContractRepository contractRepo;
     @Override
     public Vehicle findByLicensePlate(String licensePlate) {
         return vehicleRepository.getVehicleByLicensePlate(licensePlate);
@@ -41,5 +48,17 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public Vehicle saveVehicle(Vehicle vehicle) {
         return vehicleRepository.save(vehicle);
+    }
+
+    @Override
+    public Vehicle createVehicle(Vehicle vehicle) {
+        Vehicle vehicle1 = vehicleRepository.getVehicleByLicensePlate(vehicle.getLicensePlate());
+        if(vehicle1 !=null){
+            throw new ExistException("Vehicle is exist");
+        }
+        else
+            vehicle1.setVehicleType(vehicleTypeRepo.findByVehicleTypeID(vehicle.getVehicleType().getVehicleTypeID()));
+            vehicle1.setContract(contractRepo.findByContractID(vehicle.getContract().getContractID()));
+        return vehicle1;
     }
 }
