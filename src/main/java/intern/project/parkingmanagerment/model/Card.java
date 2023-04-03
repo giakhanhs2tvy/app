@@ -28,9 +28,12 @@ public class Card implements Serializable {
 	@Column(name = "card_id")
 	private Long cardId;
 	
-	@ManyToOne
-	@JoinColumn(name = "type_card_id")
-	private TypeCard typeCard;
+//	@ManyToOne
+//	@JoinColumn(name = "type_card_id")
+//	private TypeCard typeCard;
+
+	@Column(name = "license_plate")
+	private String licensePlate;
 	
 	@CreationTimestamp
 	@Column(name = "created_at")

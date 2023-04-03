@@ -16,7 +16,7 @@
                 // let response = JSON.parse(data);
                 var s = '<option value="-1">Please Select a Recipient</option>';
                 for (var i = 0; i < data.length; i++) {
-                    s += '<option value="' + data[i].vehicleTypeID + '">' + data[i].name + '</option>';
+                    s += '<option value="' + data[i].vehicleTypeId + '">' + data[i].name + '</option>';
                 }
                 $("#vehicleType").html(s);
             }
@@ -25,6 +25,7 @@
             $("#btn_checkCardId").click(function(){
                 var x = document.getElementById("cardId");
                 /*x.value = x.value.toUpperCase();*/
+                console.log("vehicleType.value: " + vehicleType.value + " hic " + vehicleType)
                 $.ajax({
                     type: "GET",
                     url: "/api/history",
@@ -33,18 +34,101 @@
                     },
                     success: function (data) {
                         // $("#bienso").value = (data);
-                        let x = document.getElementById("bienso");
-                        x.value = data.cardId;
+
+                        if(data) {
+                            if(data.licensePlate) {
+                                console.log(data)
+                                let timeOut = document.getElementById("timeOut");
+                                let vehicleType = document.getElementById("vehicleType");
+                                let licensePlate = document.getElementById("licensePlate");
+
+                                vehicleType.value = data.vehicleTypeId;
+                                timeOut.value = data.timeOut;
+                                licensePlate.value = data.licensePlate;
+                            }
+                            if(data.timeIn) {
+                                let timeIn = document.getElementById("timeIn");
+                                timeIn.value = data.timeIn;
+                            }
+                        } else {
+                            alert("thẻ không hợp lệ");
+                        }
                     }
                 });
             });
+
+            $("#btn_checkLicensePlate").click(function(){
+                var licensePlate = document.getElementById("licensePlate");
+                var vehicleType = document.getElementById("vehicleType");
+                console.log("vehicleType.value: " + vehicleType.value + " hic " + vehicleType)
+                $.ajax({
+                    type: "GET",
+                    url: "/api/check-vehicle",
+                    data: {
+                        licensePlate: licensePlate.value
+                    },
+                    success: function (data) {
+                        if(data) {
+                            console.log("data: " + data + "\ndata.vehicleType.vehicleTypeId: " + data.vehicleType.vehicleTypeId)
+                            let x = document.getElementById("vehicleType");
+                            x.value = data.vehicleType.vehicleTypeId;
+                            console.log(data)
+                            /*var select = document.getElementById("mySelect");
+                            select.value = optionValue;*/
+                        } else alert("xe chưa tồn tại vui lòng chọn loại xe")
+
+                    }
+                });
+            });
+
+            $("#btn_submit").click(function(){
+                var licensePlate = document.getElementById("licensePlate");
+                var cardId = document.getElementById("cardId");
+                var timeIn = document.getElementById("timeIn");
+                var vehicleType = document.getElementById("vehicleType");
+                var timeOut = document.getElementById("timeOut");
+                console.log("vehicleType.value: " + vehicleType.value + " hic " + vehicleType)
+                if (vehicleType.value > 0) {
+                    var historyDto = {
+                        cardId: cardId.value,
+                        licensePlate: licensePlate.value,
+                        vehicleTypeId: vehicleType.value,
+                        timeIn: timeIn.value,
+                        timeOut: timeOut.value
+                    };
+                    $.ajax({
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/api/new-history",
+                        data: JSON.stringify(historyDto),
+                        success: function (data) {
+                            if (data) {
+                                console.log(data);
+
+                                // let x = document.getElementById("vehicleType");
+                                // x.value = data.cardId;
+                                // alert("Thêm thành công " + data);
+
+                                if(data.price){
+                                    alert("Thanh toán " + data.price);
+                                }
+
+                            } else alert("xe chưa tồn tại vui lòng chọn loại xe")
+
+                        }
+                    });
+                } else {
+                    alert("chưa chọn loại xe")
+                }
+            });
+
         });
 
     </script>
 </head>
 <body>
 
-<span id="button2">hello</span>
 <form>
     <div>
         <label>ID thẻ</label>
@@ -53,7 +137,8 @@
     </div>
     <div>
         <label>Biển số xe</label>
-        <input type="text" id="bienso" placeholder="Biển số xe">
+        <input type="text" id="licensePlate" placeholder="Biển số xe">
+        <span id="btn_checkLicensePlate">check</span>
     </div>
     <div>
         <label>Loại xe</label>
@@ -62,14 +147,14 @@
     </div>
     <div>
         <label>Thời gian vào</label>
-        <input type="text" placeholder="Thời gian vào">
+        <input type="text" id="timeIn" disabled="disabled" placeholder="Thời gian vào">
     </div>
     <div>
         <label>Thời gian ra</label>
-        <input type="text" placeholder="Thời gian ra">
+        <input type="text" id="timeOut" disabled="disabled" placeholder="Thời gian ra">
     </div>
     <div>
-        <button type="submit">Submit</button>
+        <span id="btn_submit">Submit</span>
         <button type="reset">Reset</button>
     </div>
 </form>

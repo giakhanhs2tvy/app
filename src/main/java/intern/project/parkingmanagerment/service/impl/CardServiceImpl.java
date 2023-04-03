@@ -14,6 +14,6 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Card findById(Long cardId) {
-        return cardRepository.getReferenceById(cardId);
+        return cardRepository.findByCardId(cardId);
     }
 }

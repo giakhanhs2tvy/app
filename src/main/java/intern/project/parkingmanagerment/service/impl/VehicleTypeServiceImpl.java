@@ -21,6 +21,6 @@ public class VehicleTypeServiceImpl implements VehicleTypeService {
 
     @Override
     public VehicleType getVehicleType(Long vehicleTypeId) {
-        return vehicleTypeRepository.findByVehicleTypeID(vehicleTypeId);
+        return vehicleTypeRepository.findByVehicleTypeId(vehicleTypeId);
     }
 }

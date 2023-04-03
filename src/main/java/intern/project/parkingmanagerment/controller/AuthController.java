@@ -10,10 +10,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class AuthController {
@@ -39,9 +43,7 @@ public class AuthController {
         if(checkEmail){
             result.rejectValue("email",null,"There is already an account registered with the same email");
         }*/
-
-           userService.createUser(userDto);
-
+            userService.createUser(userDto);
         return "redirect:/login";
     }
     @GetMapping("/userInfo")
@@ -50,6 +52,7 @@ public class AuthController {
         model.addAttribute("currentuser1",principal.getName());
         return "userInfo";
     }
+
     @GetMapping("/403")
     public String accessDenied(Principal user,Model model){
         if (user != null) {
@@ -60,5 +63,11 @@ public class AuthController {
                     "You do not have permission to access this page!");
         }
         return "403";
+    }
+
+    @GetMapping("/car")
+    public String getCar(){
+        return "car";
+
     }
 }
