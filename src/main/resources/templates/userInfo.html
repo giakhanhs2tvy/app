@@ -8,7 +8,7 @@
 
 <h2>User Info Page</h2>
 <h3>Welcome : <span th:utext="${#request.userPrincipal.name}"></span></h3>
-<a href="/user/addCustomer">Create new customer</a>
+<a href="/user/add">Create new customer</a>
 <a href="/addContract">Create new contract</a>
 
 <form th:action="@{/logout}" method="post">

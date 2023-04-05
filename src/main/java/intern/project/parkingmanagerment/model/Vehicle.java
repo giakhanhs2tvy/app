@@ -1,5 +1,6 @@
 package intern.project.parkingmanagerment.model;
 
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Data
 @Entity
+@ToString
 @Table(name = "vehicle")
 public class Vehicle implements Serializable {
 
@@ -25,7 +27,8 @@ public class Vehicle implements Serializable {
     @Id
     @Column(name = "license_plate")
     private String licensePlate;
-    
+
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "contract_id")
     private Contract contract;

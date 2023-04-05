@@ -1,4 +1,6 @@
 package intern.project.parkingmanagerment.model;
+import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,6 +19,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Data
 @Entity
+@ToString
 @Table(name = "contract")
 public class Contract implements Serializable {
 
@@ -41,7 +44,9 @@ public class Contract implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    @OneToMany(mappedBy = "contract",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @OneToMany(mappedBy = "contract",fetch = FetchType.LAZY)
     List<Vehicle> Vehicles;
     @CreationTimestamp
     @Column(name = "created_at")

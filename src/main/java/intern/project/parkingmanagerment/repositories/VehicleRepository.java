@@ -12,4 +12,5 @@ public interface VehicleRepository extends JpaRepository<Vehicle, String> {
     Vehicle getVehicleByLicensePlate(String licensePlate);
 
     List<Vehicle> findAllVehicleByContract(Contract contract);
+
 }

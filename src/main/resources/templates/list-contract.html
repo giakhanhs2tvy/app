@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contract List</title>
+</head>
+<body>
+<h1>Contract List</h1>
+<a href="/addContract">Add New Contract</a>
+<table>
+  <thead>
+  <tr>
+    <th>Customer</th>
+    <th>Email</th>
+    <th>Contract Type</th>
+    <th>Create at</th>
+    <th>Add by</th>
+    <th>Number vehicle</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="contract : ${listContract}">
+    <td th:text="${contract.customer.name}"></td>
+    <td th:text="${contract.customer.email}"></td>
+    <td th:text="${contract.contractType.month}"></td>
+    <td th:text="${contract.createdAt}"></td>
+    <td th:text="${contract.addedBy.userName}"></td>
+    <td th:text="${contract.vehicles.size()}"></td>
+    <td>
+      <a th:href="@{/edit/{id}(id=${contract.contractID})}">Edit</a>
+      <a th:href="@{/delete/{id}(id=${contract.contractID})}">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

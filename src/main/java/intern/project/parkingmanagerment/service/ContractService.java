@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ContractService {
     Contract saveContract(Contract contract);
-
+    List<Contract> getAllContract();
 }

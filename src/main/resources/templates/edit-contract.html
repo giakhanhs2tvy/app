@@ -5,15 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/addContract}" th:object="${contract}" method="post">
+<form th:action="@{/editContract/{id}(id=${contract.contractID})}" th:object="${contract}" method="post">
     <fieldset>   <label>Customer</label>
-    <input th:field="*{customer.name}">
-        <p th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}">Name error</p>
-    <label>Contract type</label>
+        <input th:field="*{customer.name}">
+        <label>Contract type</label>
 
-    <select th:field="*{contractType.contractTypeID}">
-        <option th:each="ct :${contractType}" th:value="${ct.contractTypeID}" th:text="${ct.pricePerSize}"></option>
-    </select> <br>
+        <select th:field="*{contractType.contractTypeID}">
+            <option th:each="ct :${contractType}" th:value="${ct.contractTypeID}" th:text="${ct.pricePerSize}"></option>
+        </select> <br>
         <!--<label>Number of vehicle:</label>
         <input type="text" name="numve">-->
         <table>
@@ -36,10 +35,10 @@
         </table>
 
 
-     <!--<th:block th:each="vehicle,iter :*{vehicleList}">
-         Vehicle License Plate:
-    <input type="text" th:field="*{vehicleList[__${iter.index}__].licensePlate}">
-    </th:block>-->
+        <!--<th:block th:each="vehicle,iter :*{vehicleList}">
+            Vehicle License Plate:
+       <input type="text" th:field="*{vehicleList[__${iter.index}__].licensePlate}">
+       </th:block>-->
 
         <input type="submit" id="submitButton" th:value="Save">
         <input type="reset" id="resetButton" name="reset" th:value="Reset"/>

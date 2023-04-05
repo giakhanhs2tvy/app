@@ -50,15 +50,19 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
-    @Override
-    public Vehicle createVehicle(Vehicle vehicle) {
-        Vehicle vehicle1 = vehicleRepository.getVehicleByLicensePlate(vehicle.getLicensePlate());
+    public void saveAllVehicle(List<Vehicle> vehicleList) {
+        vehicleRepository.saveAll(vehicleList);
+    }
+
+    //@Override
+    /*public Vehicle createVehicle(Vehicle vehicle) {
+        *//*Vehicle vehicle1 = vehicleRepository.getVehicleByLicensePlate(vehicle.getLicensePlate());
         if(vehicle1 !=null){
             throw new ExistException("Vehicle is exist");
         }
         else
             vehicle1.setVehicleType(vehicleTypeRepo.findByVehicleTypeID(vehicle.getVehicleType().getVehicleTypeID()));
             vehicle1.setContract(contractRepo.findByContractID(vehicle.getContract().getContractID()));
-        return vehicle1;
-    }
+        return vehicle1;*//*
+    }*/
 }
